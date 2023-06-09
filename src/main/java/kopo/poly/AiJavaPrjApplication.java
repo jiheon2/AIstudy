@@ -1,16 +1,16 @@
 package kopo.poly;
 
-import kopo.poly.dto.NlpDTO;
-import kopo.poly.dto.OcrDTO;
+import kopo.poly.dto.StudentDTO;
 import kopo.poly.service.INlpService;
 import kopo.poly.service.IOcrService;
+import kopo.poly.service.IStudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.*;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor // Spring 메모리에 올라온 객체를 변수에 넣어주는 기능
@@ -26,6 +26,8 @@ public class AiJavaPrjApplication implements CommandLineRunner {
     // 내가 만든 Service를 가져와서 사용하기 위해 private final을 사용?
     // 실행될때 Service가 자동으로 올라감 > 올라간 것이 INlpService와 일치하면 nlpService에 가져와서 사용?
 
+    private final IStudentService studentService;
+
     public static void main(String[] args) {
         SpringApplication.run(AiJavaPrjApplication.class, args);
     }
@@ -34,67 +36,90 @@ public class AiJavaPrjApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("자바 프로그래밍 시작!");
 
-        String filePath = "Image";
-        String fileName = "sample02.jpg";
+//        String filePath = "Image";
+//        String fileName = "sample02.jpg";
+//
+//        OcrDTO pDTO = new OcrDTO();
+//
+//        pDTO.setFilePath(filePath);
+//        pDTO.setFileName(fileName);
+//
+//        OcrDTO ocrDTO = ocrService.getReadforImageText(pDTO);
+//
+//        String result = ocrDTO.getResult();
+//
+//        log.info("인식된 문자열");
+//        log.info(result);
+//
+//        log.info("------------------------------------------------------");
+//
+//        NlpDTO nlpDTO = nlpService.getPlainText(result); // 품사 분석 결과를 가져옴
+//        log.info("형태소별 품사 분석 결과 : " + nlpDTO.getResult());
+//
+//        nlpDTO = nlpService.getNouns(result);
+//        // 품사 분석결과에서 명사만 추출한 결과를 저장함
+//
+//        List<String> nouns = nlpDTO.getNouns();
+//        // 명사만 추출한 결과를 LIst 형태의 nouns 변수에 저장
+//
+//        Set<String> distinct = new HashSet<>(nouns);
+//        // 중복제거
+//        // Set은 중복을 허용하지 않음 / List를 Set구조로 변환함
+//
+//        log.info("중복제거 수행 전 단어 수 : " + nouns.size());
+//        log.info("중복제거 수행 후 단어 수 : " + distinct.size());
+//
+//        Map<String, Integer> rMap = new HashMap<>();
+//        // 단어, 빈도수를 Map 구조로 저장하기 위해 객체 생성
+//        // Map 구조의 키는 중복 불가능(값은 중복가능)
+//        // <String, Integer>의 구조
+//
+//        for (String s : distinct) { // distinct의 각 요소를 s에 순차적으로 가져옴(a1, a2, a3...)
+//            int count = Collections.frequency(nouns, s); // nouns에서 s가 등장하는 횟수를 count에 저장하는 코드
+//            // frequency 메서드 : 주어진 컬렉션에서 특정 요소가 등장하는 횟수를 반환하는 정적 메서드
+//            rMap.put(s, count); // s 는 키, count를 값으로 가지는 엔트리를 추가하는 코드
+//
+//            log.info(s + " : " + count);
+//        }
+//
+//        List<Map.Entry<String, Integer>> sortResult = new LinkedList<>(rMap.entrySet());
+//        // 빈도수 결과를 정렬하는 코드
+//        // 정렬을 위해 맵에 저장된 레코드 1개(키, 값) 즉 맵의 형태를 리스트 구조로 변경하는 코드
+//        // rMap.entrySet() : rMap의 모든 엔트리를 Set형태로 반환
+//        // 엔트리 : 키 / 값의 쌍을 나타내는 개체
+//        // LinkedList는 List인터페이스의 구현체
+//        // sortResult는 rMap의 엔트리를 가지고 있는 LinkedList
+//        // LinkedList는 순서를 바꾸거나 정렬할 수 있음
+//        // rMap이라는 Map<String, Integer>객체의 엔트리들을 리스트로 변환하고 sortResult라는 변수에 할당하는 코드
+//
+//        Collections.sort(sortResult, ((o1, o2) -> o2.getValue().compareTo(o1.getValue())));
+//        // 람다식이 적용되었고 저장된 list 결과를 정렬하는 코드
+//        // o1, o2 앞의 값, 뒤의 값 > o2(뒤의 값)을 o1(앞의 값)과 비교하면서 정렬하는 코드
+//
+//        log.info("가장 많이 사용된 단어는? : " + sortResult);
 
-        OcrDTO pDTO = new OcrDTO();
+        StudentDTO pDTO; // 학생 등록, 수정, 삭제에 활용될 DTO
+        List<StudentDTO> rList;
 
-        pDTO.setFilePath(filePath);
-        pDTO.setFileName(fileName);
+        pDTO = new StudentDTO();
 
-        OcrDTO ocrDTO = ocrService.getReadforImageText(pDTO);
+        pDTO.setUserId("kch3453");
+        pDTO.setUserName("김지헌");
+        pDTO.setEmail("kch3453@naver.com");
+        pDTO.setAddr("서울");
+        // Student 테이블에 저장할 값을 DTO에 저장하기
 
-        String result = ocrDTO.getResult();
+        rList = studentService.insertStudent(pDTO);
+        // 서비스 호출 / 학생 정보를 넣는 기능
 
-        log.info("인식된 문자열");
-        log.info(result);
-
-        log.info("------------------------------------------------------");
-
-        NlpDTO nlpDTO = nlpService.getPlainText(result); // 품사 분석 결과를 가져옴
-        log.info("형태소별 품사 분석 결과 : " + nlpDTO.getResult());
-
-        nlpDTO = nlpService.getNouns(result);
-        // 품사 분석결과에서 명사만 추출한 결과를 저장함
-
-        List<String> nouns = nlpDTO.getNouns();
-        // 명사만 추출한 결과를 LIst 형태의 nouns 변수에 저장
-
-        Set<String> distinct = new HashSet<>(nouns);
-        // 중복제거
-        // Set은 중복을 허용하지 않음 / List를 Set구조로 변환함
-
-        log.info("중복제거 수행 전 단어 수 : " + nouns.size());
-        log.info("중복제거 수행 후 단어 수 : " + distinct.size());
-
-        Map<String, Integer> rMap = new HashMap<>();
-        // 단어, 빈도수를 Map 구조로 저장하기 위해 객체 생성
-        // Map 구조의 키는 중복 불가능(값은 중복가능)
-        // <String, Integer>의 구조
-
-        for (String s : distinct) { // distinct의 각 요소를 s에 순차적으로 가져옴(a1, a2, a3...)
-            int count = Collections.frequency(nouns, s); // nouns에서 s가 등장하는 횟수를 count에 저장하는 코드
-            // frequency 메서드 : 주어진 컬렉션에서 특정 요소가 등장하는 횟수를 반환하는 정적 메서드
-            rMap.put(s, count); // s 는 키, count를 값으로 가지는 엔트리를 추가하는 코드
-
-            log.info(s + " : " + count);
-        }
-
-        List<Map.Entry<String, Integer>> sortResult = new LinkedList<>(rMap.entrySet());
-        // 빈도수 결과를 정렬하는 코드
-        // 정렬을 위해 맵에 저장된 레코드 1개(키, 값) 즉 맵의 형태를 리스트 구조로 변경하는 코드
-        // rMap.entrySet() : rMap의 모든 엔트리를 Set형태로 반환
-        // 엔트리 : 키 / 값의 쌍을 나타내는 개체
-        // LinkedList는 List인터페이스의 구현체
-        // sortResult는 rMap의 엔트리를 가지고 있는 LinkedList
-        // LinkedList는 순서를 바꾸거나 정렬할 수 있음
-        // rMap이라는 Map<String, Integer>객체의 엔트리들을 리스트로 변환하고 sortResult라는 변수에 할당하는 코드
-
-        Collections.sort(sortResult, ((o1, o2) -> o2.getValue().compareTo(o1.getValue())));
-        // 람다식이 적용되었고 저장된 list 결과를 정렬하는 코드
-        // o1, o2 앞의 값, 뒤의 값 > o2(뒤의 값)을 o1(앞의 값)과 비교하면서 정렬하는 코드
-
-        log.info("가장 많이 사용된 단어는? : " + sortResult);
+        rList.forEach(dto -> {
+            log.info("DB에 저장된 아이디 : " + dto.getUserId());
+            log.info("DB에 저장된 이름 : " + dto.getUserName());
+            log.info("DB에 저장된 이메일 : " + dto.getEmail());
+            log.info("DB에 저장된 주소 : " + dto.getAddr());
+        });
+        // Student 테이블 전체 조회 결과를 출력하는 문구
+        // foreach문 사용
 
         log.info("자바 프로그램 종료!");
     }
