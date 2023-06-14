@@ -24,4 +24,18 @@
         FROM STUDENT
         WHERE USER_ID = #{userId}
     </select>
+
+    <update id="updateStudent" parameterType="StudentDTO">
+        UPDATE STUDENT
+        SET USER_NAME = #{userName},
+            EMAIL = #{email},
+            ADDR = #{addr}
+        WHERE USER_ID = #{userId}
+    </update>
+    
+    <delete id="deleteStudent" parameterType="StudentDTO">
+        DELETE
+        FROM STUDENT
+        WHERE USER_ID = #{userId}
+    </delete>
 </mapper>

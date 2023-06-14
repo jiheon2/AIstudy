@@ -121,6 +121,37 @@ public class AiJavaPrjApplication implements CommandLineRunner {
         // Student 테이블 전체 조회 결과를 출력하는 문구
         // foreach문 사용
 
+//        pDTO = new StudentDTO();
+//
+//        pDTO.setUserId("kch3453");
+//        pDTO.setUserName("김지헌_수정");
+//        pDTO.setEmail("kch3453@naver.com_수정");
+//        pDTO.setAddr("서울_수정");
+//
+//        rList = studentService.updateStudent(pDTO);
+//
+//        rList.forEach(dto -> {
+//            log.info("DB에 저장된 아이디 : " + dto.getUserId());
+//            log.info("DB에 저장된 이름 : " + dto.getUserName());
+//            log.info("DB에 저장된 이메일 : " + dto.getEmail());
+//            log.info("DB에 저장된 주소 : " + dto.getAddr());
+//        });
+        // update코드
+
+        pDTO = new StudentDTO();
+
+        pDTO.setUserId("kch3453");
+
+        rList = studentService.deleteStudent(pDTO);
+
+        rList.forEach(dto -> {
+            log.info("DB에 저장된 아이디 : " + dto.getUserId());
+            log.info("DB에 저장된 이름 : " + dto.getUserName());
+            log.info("DB에 저장된 이메일 : " + dto.getEmail());
+            log.info("DB에 저장된 주소 : " + dto.getAddr());
+        });
+        // delete코드
+
         log.info("자바 프로그램 종료!");
     }
     // Override영역에 실제 코드를 작성해야함

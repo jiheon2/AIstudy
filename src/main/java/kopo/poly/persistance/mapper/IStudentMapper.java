@@ -33,4 +33,8 @@ public interface IStudentMapper {
 
     StudentDTO getStudent(StudentDTO pDTO) throws Exception;
     // 학생이 존재하는지 체크하기 위해 학생 아이디를 기준으로 1명 조회하기 쿼리
+
+    void updateStudent(StudentDTO pDTO) throws Exception;
+
+    void deleteStudent(StudentDTO pDTO) throws Exception;
 }

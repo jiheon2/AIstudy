@@ -44,4 +44,46 @@ public class StudentService implements IStudentService {
 
         return rList;
     }
+
+    @Override
+    public List<StudentDTO> updateStudent(StudentDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".updateStudent Start!");
+
+        Optional<StudentDTO> res = Optional.ofNullable(studentMapper.getStudent(pDTO));
+
+        if(res.isPresent()) {
+            studentMapper.updateStudent(pDTO);
+            log.info(pDTO.getUserId() + "님이 수정되었습니다.");
+        } else {
+            log.info("회원이 존재하지 않아 수정되지 못했습니다");
+        }
+
+        List<StudentDTO> rList = Optional.ofNullable(studentMapper.getStudentList()).orElseGet(ArrayList::new);
+
+        log.info(this.getClass().getName() + ".updateStudent End!");
+
+        return rList;
+    }
+
+    @Override
+    public List<StudentDTO> deleteStudent(StudentDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".deleteStudent Start!");
+
+        Optional<StudentDTO> res = Optional.ofNullable(studentMapper.getStudent(pDTO));
+
+        if(res.isPresent()) {
+            studentMapper.deleteStudent(pDTO);
+            log.info(pDTO.getUserId() + "님이 삭제되었습니다");
+        } else {
+            log.info("회원이 존재하지 않아 삭제가 되지 않았습니다");
+        }
+
+        List<StudentDTO> rList = Optional.ofNullable(studentMapper.getStudentList()).orElseGet(ArrayList::new);
+
+        log.info(this.getClass().getName() + ".deleteStudent End!");
+
+        return rList;
+    }
 }
