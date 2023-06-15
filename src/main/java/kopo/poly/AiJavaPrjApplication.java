@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -103,24 +104,24 @@ public class AiJavaPrjApplication implements CommandLineRunner {
 
         pDTO = new StudentDTO();
 
-        pDTO.setUserId("kch3453");
-        pDTO.setUserName("김지헌");
-        pDTO.setEmail("kch3453@naver.com");
-        pDTO.setAddr("서울");
-        // Student 테이블에 저장할 값을 DTO에 저장하기
-
-        rList = studentService.insertStudent(pDTO);
-        // 서비스 호출 / 학생 정보를 넣는 기능
-
-        rList.forEach(dto -> {
-            log.info("DB에 저장된 아이디 : " + dto.getUserId());
-            log.info("DB에 저장된 이름 : " + dto.getUserName());
-            log.info("DB에 저장된 이메일 : " + dto.getEmail());
-            log.info("DB에 저장된 주소 : " + dto.getAddr());
-        });
-        // Student 테이블 전체 조회 결과를 출력하는 문구
-        // foreach문 사용
-
+//        pDTO.setUserId("kch3453");
+//        pDTO.setUserName("김지헌");
+//        pDTO.setEmail("kch3453@naver.com");
+//        pDTO.setAddr("서울");
+//        // Student 테이블에 저장할 값을 DTO에 저장하기
+//
+//        rList = studentService.insertStudent(pDTO);
+//        // 서비스 호출 / 학생 정보를 넣는 기능
+//
+//        rList.forEach(dto -> {
+//            log.info("DB에 저장된 아이디 : " + dto.getUserId());
+//            log.info("DB에 저장된 이름 : " + dto.getUserName());
+//            log.info("DB에 저장된 이메일 : " + dto.getEmail());
+//            log.info("DB에 저장된 주소 : " + dto.getAddr());
+//        });
+//         Student 테이블 전체 조회 결과를 출력하는 문구
+//         foreach문 사용
+//
 //        pDTO = new StudentDTO();
 //
 //        pDTO.setUserId("kch3453");
@@ -136,25 +137,63 @@ public class AiJavaPrjApplication implements CommandLineRunner {
 //            log.info("DB에 저장된 이메일 : " + dto.getEmail());
 //            log.info("DB에 저장된 주소 : " + dto.getAddr());
 //        });
-        // update코드
+////         update코드
 
-        pDTO = new StudentDTO();
+//        pDTO = new StudentDTO();
+//
+//        pDTO.setUserId("kch3453");
+//
+//        rList = studentService.deleteStudent(pDTO);
+//
+//        rList.forEach(dto -> {
+//            log.info("DB에 저장된 아이디 : " + dto.getUserId());
+//            log.info("DB에 저장된 이름 : " + dto.getUserName());
+//            log.info("DB에 저장된 이메일 : " + dto.getEmail());
+//            log.info("DB에 저장된 주소 : " + dto.getAddr());
+//        });
+////         delete코드
 
-        pDTO.setUserId("kch3453");
 
-        rList = studentService.deleteStudent(pDTO);
+        List<StudentDTO> StudentList = new ArrayList<>();
 
-        rList.forEach(dto -> {
+        StudentDTO firstStudent = new StudentDTO();
+        firstStudent.setUserId("aaa114");
+        firstStudent.setUserName("Daniel");
+        firstStudent.setEmail("aaa111@naver.com");
+        firstStudent.setAddr("서울");
+
+        StudentDTO secondStudent = new StudentDTO();
+        secondStudent.setUserId("bbb225");
+        secondStudent.setUserName("hoho");
+        secondStudent.setEmail("bbb222@naver.com");
+        secondStudent.setAddr("서울");
+
+        StudentDTO thirdStudent = new StudentDTO();
+        thirdStudent.setUserId("ccc336");
+        thirdStudent.setUserName("kuku");
+        thirdStudent.setEmail("ccc333@naver.com");
+        thirdStudent.setAddr("서울");
+
+        StudentList.add(firstStudent);
+        StudentList.add(secondStudent);
+        StudentList.add(thirdStudent);
+
+
+        studentService.ManyInsertStudent(StudentList);
+
+        StudentList.forEach(dto -> {
             log.info("DB에 저장된 아이디 : " + dto.getUserId());
             log.info("DB에 저장된 이름 : " + dto.getUserName());
             log.info("DB에 저장된 이메일 : " + dto.getEmail());
-            log.info("DB에 저장된 주소 : " + dto.getAddr());
+            log.info("DB에 저장된 주소 : " + dto. getAddr());
         });
-        // delete코드
 
         log.info("자바 프로그램 종료!");
+
+        }
     }
     // Override영역에 실제 코드를 작성해야함
     // 스프링은 인터페이스를 통해 자바코드를 본다
     // 보내는(전달하는) 변수명 pDTO(파라미터), 받는 변수명 rDTO(result)로 개발자들이 많이 씀
-}
+
+
